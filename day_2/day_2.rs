@@ -7,7 +7,7 @@ fn part_1(input: &Vec<String>) -> u32 {
 
     for (_, s) in input.iter().enumerate() {
         match s.chars().nth(0).unwrap() {
-            'd' => { 
+            'd' => {
                 let n = s[5..].parse::<u32>().unwrap();
                 d += n;
             }
@@ -21,9 +21,9 @@ fn part_1(input: &Vec<String>) -> u32 {
             }
             _ => unreachable!(),
         }
-    };
+    }
 
-    h*d
+    h * d
 }
 
 fn part_2(input: &Vec<String>) -> u32 {
@@ -33,7 +33,7 @@ fn part_2(input: &Vec<String>) -> u32 {
 
     for (_, s) in input.iter().enumerate() {
         match s.chars().nth(0).unwrap() {
-            'd' => { 
+            'd' => {
                 let n = s[5..].parse::<u32>().unwrap();
                 a += n;
             }
@@ -48,10 +48,9 @@ fn part_2(input: &Vec<String>) -> u32 {
             }
             _ => unreachable!(),
         }
-    };
+    }
 
-    h*d
-
+    h * d
 }
 
 fn main() {
