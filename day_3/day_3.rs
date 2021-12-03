@@ -33,6 +33,14 @@ fn part_1(input: &Vec<String>) -> usize {
     n1 * n2
 }
 
+fn keep_value(idx_v: &Vec<usize>, s_v: &mut Vec<String>) {
+    let mut k_v = vec![];
+    for (_, v) in idx_v.iter().enumerate() {
+        k_v.push(s_v[*v].to_string());
+    }
+    *s_v = k_v;
+}
+
 fn part_2(input: &Vec<String>) -> usize {
     let mut i = 0;
     let mut gen = input.clone();
@@ -53,17 +61,9 @@ fn part_2(input: &Vec<String>) -> usize {
                 }
 
                 if n_0.len() > n_1.len() {
-                    let mut keep_value = vec![];
-                    for (_, v) in n_0.iter().enumerate() {
-                        keep_value.push(gen[*v].to_string());
-                    }
-                    gen = keep_value;
+                    keep_value(&n_0, &mut gen);
                 } else if n_0.len() <= n_1.len() {
-                    let mut keep_value = vec![];
-                    for (_, v) in n_1.iter().enumerate() {
-                        keep_value.push(gen[*v].to_string());
-                    }
-                    gen = keep_value;
+                    keep_value(&n_1, &mut gen);
                 }
             }
 
@@ -80,17 +80,9 @@ fn part_2(input: &Vec<String>) -> usize {
                 }
 
                 if n_0.len() <= n_1.len() {
-                    let mut keep_value = vec![];
-                    for (_, v) in n_0.iter().enumerate() {
-                        keep_value.push(co2[*v].to_string());
-                    }
-                    co2 = keep_value;
+                    keep_value(&n_0, &mut co2);
                 } else if n_0.len() > n_1.len() {
-                    let mut keep_value = vec![];
-                    for (_, v) in n_1.iter().enumerate() {
-                        keep_value.push(co2[*v].to_string());
-                    }
-                    co2 = keep_value;
+                    keep_value(&n_1, &mut co2);
                 }
             }
         } else {
@@ -114,6 +106,6 @@ fn main() {
         .map(|x| x.parse::<String>().unwrap())
         .collect::<Vec<_>>();
 
-    println!("Part 1: {:?}", part_1(&v));
+    println!("Part 1: {}", part_1(&v));
     println!("Part 2: {}", part_2(&v));
 }
