@@ -4,27 +4,21 @@ use std::fs::read_to_string;
 fn part_1(input: &Vec<String>) -> usize {
     let mut gama = String::from("");
     let mut espion = String::from("");
-    let mut i = 0;
 
-    loop {
-        if i < 12 {
-            let mut n_0 = 0;
-            for (_, v) in input.iter().enumerate() {
-                if v.chars().nth(i).unwrap() == '0' {
-                    n_0 += 1;
-                }
+    for i in 0..12 {
+        let mut n_0 = 0;
+        for (_, v) in input.iter().enumerate() {
+            if v.chars().nth(i).unwrap() == '0' {
+                n_0 += 1;
             }
-            if n_0 > input.len() / 2 {
-                gama.push('0');
-                espion.push('1');
-            } else {
-                gama.push('1');
-                espion.push('0');
-            }
-        } else {
-            break;
         }
-        i += 1;
+        if n_0 > input.len() / 2 {
+            gama.push('0');
+            espion.push('1');
+        } else {
+            gama.push('1');
+            espion.push('0');
+        }
     }
 
     let n1 = usize::from_str_radix(gama.as_str(), 2).unwrap();
@@ -42,53 +36,47 @@ fn keep_value(idx_v: &Vec<usize>, s_v: &mut Vec<String>) {
 }
 
 fn part_2(input: &Vec<String>) -> usize {
-    let mut i = 0;
     let mut gen = input.clone();
     let mut co2 = input.clone();
 
-    loop {
-        if i < 12 {
-            let mut n_0 = vec![];
-            let mut n_1 = vec![];
+    for i in 0..12 {
+        let mut n_0 = vec![];
+        let mut n_1 = vec![];
 
-            if gen.len() > 1 {
-                for (n, s) in gen.iter().enumerate() {
-                    if s.chars().nth(i).unwrap() == '0' {
-                        n_0.push(n);
-                    } else {
-                        n_1.push(n);
-                    }
-                }
-
-                if n_0.len() > n_1.len() {
-                    keep_value(&n_0, &mut gen);
-                } else if n_0.len() <= n_1.len() {
-                    keep_value(&n_1, &mut gen);
+        if gen.len() > 1 {
+            for (n, s) in gen.iter().enumerate() {
+                if s.chars().nth(i).unwrap() == '0' {
+                    n_0.push(n);
+                } else {
+                    n_1.push(n);
                 }
             }
 
-            n_0 = vec![];
-            n_1 = vec![];
-
-            if co2.len() > 1 {
-                for (n, s) in co2.iter().enumerate() {
-                    if s.chars().nth(i).unwrap() == '0' {
-                        n_0.push(n);
-                    } else {
-                        n_1.push(n);
-                    }
-                }
-
-                if n_0.len() <= n_1.len() {
-                    keep_value(&n_0, &mut co2);
-                } else if n_0.len() > n_1.len() {
-                    keep_value(&n_1, &mut co2);
-                }
+            if n_0.len() > n_1.len() {
+                keep_value(&n_0, &mut gen);
+            } else if n_0.len() <= n_1.len() {
+                keep_value(&n_1, &mut gen);
             }
-        } else {
-            break;
         }
-        i += 1;
+
+        n_0 = vec![];
+        n_1 = vec![];
+
+        if co2.len() > 1 { 
+            for (n, s) in co2.iter().enumerate() {
+                if s.chars().nth(i).unwrap() == '0' {
+                    n_0.push(n);
+                } else {
+                    n_1.push(n);
+                }
+            }
+
+            if n_0.len() <= n_1.len() {
+                keep_value(&n_0, &mut co2);
+            } else if n_0.len() > n_1.len() {
+                keep_value(&n_1, &mut co2);
+            }
+        }
     }
 
     let n1 = usize::from_str_radix(gen[0].as_str(), 2).unwrap();
