@@ -1,18 +1,16 @@
-let part_1 (arr: int array): int =
-  let n = ref 0 in
-  for i = 0 to Array.length arr - 2 do
+let rec part_1 ?(n = 0) ?(i = 0) (arr: int array): int =
+  if i < Array.length arr - 1 then
     if arr.(i) < arr.(i+1) then
-      n := !n+1
-  done;
-  !n
+      part_1 ~n:(n+1) ~i:(i+1) (arr)
+    else part_1 ~n:(n) ~i:(i+1) (arr)
+  else n
 
-let part_2 (arr: int array): int =
-  let n = ref 0 in
-  for i = 0 to Array.length arr - 5 do
-    if arr.(i) + arr.(i+1) + arr.(i+2) < arr.(i+1) + arr.(i+2) + arr.(i+3) then
-      n := !n+1
-  done;
-  !n
+let rec part_2 ?(n = 0) ?(i = 0) (arr: int array): int =
+  if i < Array.length arr - 3 then
+      if arr.(i) + arr.(i+1) + arr.(i+2) < arr.(i+1) + arr.(i+2) + arr.(i+3) then
+        part_2 ~n:(n+1) ~i:(i+1) (arr)
+      else part_2 ~n:(n) ~i:(i+1) (arr)
+    else n
 
 let read_file =
   let ic = open_in "input.txt" in
