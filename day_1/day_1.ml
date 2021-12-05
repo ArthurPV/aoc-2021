@@ -25,6 +25,8 @@ let read_file =
   loop []
 
 let () = 
-  let arr_int = Array.map (fun s -> int_of_string s) (Array.of_list read_file) in
+  let arr_int = read_file
+  |> Array.of_list
+  |> Array.map (fun s -> int_of_string s) in
   Printf.printf "%d\n" (part_1 arr_int);
   Printf.printf "%d\n" (part_2 arr_int)
